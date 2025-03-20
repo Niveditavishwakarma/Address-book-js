@@ -6,18 +6,29 @@ class AddressBook {
   }
 
   addContact(contact) {
-    if (this.contacts.some((c) => c.phoneNumber === contact.phoneNumber)) {
-      console.log("❌ Error: Contact with this phone number already exists.");
+    // 🔍 Check for duplicate by filtering existing contacts
+    const isDuplicate = this.contacts.some(
+      (c) =>
+        c.firstName.toLowerCase() === contact.firstName.toLowerCase() &&
+        c.lastName.toLowerCase() === contact.lastName.toLowerCase()
+    );
+
+    if (isDuplicate) {
+      console.log(
+        `❌ Error: Contact "${contact.firstName} ${contact.lastName}" already exists.`
+      );
     } else {
       this.contacts.push(contact);
-      console.log("✅ Contact added successfully!");
+      console.log(
+        `✅ Contact "${contact.firstName} ${contact.lastName}" added successfully!`
+      );
     }
   }
 
   displayContacts() {
     console.log("\n--- Address Book Contacts ---");
     if (this.contacts.length === 0) {
-      console.log("Address book is empty.");
+      console.log("📂 Address book is empty.");
       return;
     }
     this.contacts.forEach((contact) => contact.displayContact());
@@ -51,30 +62,33 @@ class AddressBook {
       );
       contact.displayContact();
     } else {
-      console.log("No valid updates were provided.");
+      console.log("⚠️ No valid updates were provided.");
     }
   }
 
   deleteContact(firstName, lastName) {
-    const index = this.contacts.findIndex(
+    const initialCount = this.contacts.length;
+
+    // 🔥 Remove contact using `filter`
+    this.contacts = this.contacts.filter(
       (contact) =>
-        contact.firstName.toLowerCase() === firstName.toLowerCase() &&
-        contact.lastName.toLowerCase() === lastName.toLowerCase()
+        contact.firstName.toLowerCase() !== firstName.toLowerCase() ||
+        contact.lastName.toLowerCase() !== lastName.toLowerCase()
     );
 
-    if (index === -1) {
+    if (this.contacts.length === initialCount) {
       console.log(`❌ No contact found with name "${firstName} ${lastName}"`);
-      return;
+    } else {
+      console.log(
+        `✅ Contact "${firstName} ${lastName}" deleted successfully!`
+      );
     }
-
-    this.contacts.splice(index, 1);
-    console.log(`✅ Contact "${firstName} ${lastName}" deleted successfully!`);
   }
 
-  // ✅ Get total number of contacts using reduce
   getContactCount() {
+    // 📊 Using `reduce()` to count total contacts
     const count = this.contacts.reduce((total) => total + 1, 0);
-    console.log(` Total Contacts: ${count}`);
+    console.log(`📊 Total Contacts: ${count}`);
     return count;
   }
 }
