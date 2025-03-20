@@ -28,16 +28,14 @@ try {
   );
   addressBook.addContact(contact2);
 
-  console.log("\nBefore Editing:");
+  console.log("\nBefore Deletion:");
   addressBook.displayContacts();
 
-  console.log("\nEditing John's Contact:");
-  addressBook.editContact("John", "Doe", {
-    city: "Chicago",
-    phoneNumber: "9876543330",
-  });
+  // Deleting Contact
+  console.log("\nDeleting Jane Smith:");
+  addressBook.deleteContact("Jane", "Smith");
 
-  console.log("\nAfter Editing:");
+  console.log("\nAfter Deletion:");
   addressBook.displayContacts();
 } catch (error) {
   console.error(error.message);
