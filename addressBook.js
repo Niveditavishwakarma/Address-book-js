@@ -5,6 +5,7 @@ class AddressBook {
     this.contacts = [];
   }
 
+  // Add a contact (checks for duplicate names)
   addContact(contact) {
     const duplicate = this.contacts.some(
       (c) =>
@@ -25,6 +26,7 @@ class AddressBook {
     );
   }
 
+  // Find a contact by name
   findContact(firstName, lastName) {
     return this.contacts.find(
       (contact) =>
@@ -33,6 +35,7 @@ class AddressBook {
     );
   }
 
+  // Edit a contact's details
   editContact(firstName, lastName, updatedDetails) {
     let contact = this.findContact(firstName, lastName);
     if (!contact) {
@@ -44,6 +47,7 @@ class AddressBook {
     console.log(`✏️ Contact "${firstName} ${lastName}" updated successfully!`);
   }
 
+  // Delete a contact by name
   deleteContact(firstName, lastName) {
     const initialLength = this.contacts.length;
     this.contacts = this.contacts.filter(
@@ -61,6 +65,7 @@ class AddressBook {
     }
   }
 
+  // Display all contacts
   displayContacts() {
     console.log("\n📖 --- Address Book Contacts ---");
     if (this.contacts.length === 0) {
@@ -70,12 +75,14 @@ class AddressBook {
     this.contacts.forEach((contact) => contact.displayContact());
   }
 
+  // Count total number of contacts using reduce()
   countContacts() {
     const totalContacts = this.contacts.reduce((count) => count + 1, 0);
     console.log(`📊 Total Contacts: ${totalContacts}`);
     return totalContacts;
   }
 
+  // View Persons by City
   viewPersonsByCity(city) {
     const personsInCity = this.contacts
       .filter((contact) => contact.city.toLowerCase() === city.toLowerCase())
@@ -88,6 +95,7 @@ class AddressBook {
     }
   }
 
+  // View Persons by State
   viewPersonsByState(state) {
     const personsInState = this.contacts
       .filter((contact) => contact.state.toLowerCase() === state.toLowerCase())
@@ -98,6 +106,26 @@ class AddressBook {
     } else {
       console.log(`🌎 Persons in ${state}: ${personsInState.join(", ")}`);
     }
+  }
+
+  // Count Persons by City
+  countPersonsByCity(city) {
+    const count = this.contacts
+      .filter((contact) => contact.city.toLowerCase() === city.toLowerCase())
+      .reduce((total) => total + 1, 0);
+
+    console.log(`🏙️ Number of persons in ${city}: ${count}`);
+    return count;
+  }
+
+  // Count Persons by State
+  countPersonsByState(state) {
+    const count = this.contacts
+      .filter((contact) => contact.state.toLowerCase() === state.toLowerCase())
+      .reduce((total) => total + 1, 0);
+
+    console.log(`🌍 Number of persons in ${state}: ${count}`);
+    return count;
   }
 }
 

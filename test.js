@@ -40,6 +40,18 @@ try {
       "alice.brown@example.com"
     )
   );
+  addressBook.addContact(
+    new Contact(
+      "Bob",
+      "Johnson",
+      "234 Elm St",
+      "New York",
+      "California",
+      "100002",
+      "9876543240",
+      "bob.johnson@example.com"
+    )
+  );
 } catch (error) {
   console.error(error.message);
 }
@@ -47,10 +59,16 @@ try {
 addressBook.displayContacts();
 
 console.log("\n🔍 Viewing Persons by City:");
-addressBook.viewPersonsByCity("Los Angeles");
+addressBook.viewPersonsByCity("New York");
 
 console.log("\n🔍 Viewing Persons by State:");
 addressBook.viewPersonsByState("California");
 
-console.log("\n📊 Counting Contacts:");
+console.log("\n📊 Counting Persons by City:");
+addressBook.countPersonsByCity("New York");
+
+console.log("\n📊 Counting Persons by State:");
+addressBook.countPersonsByState("California");
+
+console.log("\n📊 Total Contacts:");
 addressBook.countContacts();
