@@ -28,11 +28,22 @@ try {
   );
   addressBook.addContact(contact2);
 
+  const duplicateContact = new Contact(
+    "John",
+    "Doe",
+    "1111 Avenue",
+    "Boston",
+    "Massachusetts",
+    "02101",
+    "9123456789",
+    "john.duplicate@example.com"
+  );
+  addressBook.addContact(duplicateContact);
+
   console.log("\nBefore Deletion:");
   addressBook.displayContacts();
   addressBook.getContactCount();
 
-  // Deleting Contact
   console.log("\nDeleting Jane Smith:");
   addressBook.deleteContact("Jane", "Smith");
 
