@@ -6,15 +6,15 @@ class AddressBook {
   }
 
   addContact(contact) {
-    const duplicate = this.contacts.some(
+    const isDuplicate = this.contacts.some(
       (c) =>
         c.firstName.toLowerCase() === contact.firstName.toLowerCase() &&
         c.lastName.toLowerCase() === contact.lastName.toLowerCase()
     );
 
-    if (duplicate) {
+    if (isDuplicate) {
       console.log(
-        `❌ Error: Contact with name "${contact.firstName} ${contact.lastName}" already exists.`
+        `❌ Error: Contact "${contact.firstName} ${contact.lastName}" already exists.`
       );
       return;
     }
@@ -23,6 +23,15 @@ class AddressBook {
     console.log(
       `✅ Contact "${contact.firstName} ${contact.lastName}" added successfully!`
     );
+  }
+
+  displayContacts() {
+    console.log("\n📖 --- Address Book Contacts ---");
+    if (this.contacts.length === 0) {
+      console.log("📭 No contacts available.");
+      return;
+    }
+    this.contacts.forEach((contact) => contact.displayContact());
   }
 
   findContact(firstName, lastName) {
@@ -36,12 +45,11 @@ class AddressBook {
   editContact(firstName, lastName, updatedDetails) {
     let contact = this.findContact(firstName, lastName);
     if (!contact) {
-      console.log(`❌ No contact found with name "${firstName} ${lastName}"`);
+      console.log(`❌ No contact found with name "${firstName} ${lastName}".`);
       return;
     }
-
     Object.assign(contact, updatedDetails);
-    console.log(`✏️ Contact "${firstName} ${lastName}" updated successfully!`);
+    console.log(`✅ Contact "${firstName} ${lastName}" updated successfully!`);
   }
 
   deleteContact(firstName, lastName) {
@@ -53,51 +61,62 @@ class AddressBook {
     );
 
     if (this.contacts.length === initialLength) {
-      console.log(`❌ No contact found with name "${firstName} ${lastName}"`);
+      console.log(`❌ Contact "${firstName} ${lastName}" not found.`);
     } else {
       console.log(
-        `🗑️ Contact "${firstName} ${lastName}" deleted successfully!`
+        `✅ Contact "${firstName} ${lastName}" deleted successfully!`
       );
     }
   }
 
-  displayContacts() {
-    console.log("\n📖 --- Address Book Contacts ---");
-    if (this.contacts.length === 0) {
-      console.log("📭 No contacts available.");
-      return;
+  getTotalContacts() {
+    const count = this.contacts.reduce((acc) => acc + 1, 0);
+    console.log(`📊 Total Contacts: ${count}`);
+    return count;
+  }
+
+  findByCityOrState(location) {
+    const filteredContacts = this.contacts.filter(
+      (contact) =>
+        contact.city.toLowerCase() === location.toLowerCase() ||
+        contact.state.toLowerCase() === location.toLowerCase()
+    );
+
+    console.log(`\n🔎 Contacts in "${location}":`);
+    if (filteredContacts.length === 0) {
+      console.log("📭 No contacts found.");
+    } else {
+      filteredContacts.forEach((contact) => contact.displayContact());
     }
+  }
+
+  countByCityOrState() {
+    const cityCount = this.contacts.reduce((acc, contact) => {
+      acc[contact.city] = (acc[contact.city] || 0) + 1;
+      return acc;
+    }, {});
+
+    const stateCount = this.contacts.reduce((acc, contact) => {
+      acc[contact.state] = (acc[contact.state] || 0) + 1;
+      return acc;
+    }, {});
+
+    console.log("\n📊 Contact Count by City:");
+    console.table(cityCount);
+
+    console.log("\n📊 Contact Count by State:");
+    console.table(stateCount);
+  }
+
+  sortContactsByName() {
+    this.contacts.sort((a, b) =>
+      (a.firstName + " " + a.lastName).localeCompare(
+        b.firstName + " " + b.lastName
+      )
+    );
+
+    console.log("\n📖 --- Sorted Address Book ---");
     this.contacts.forEach((contact) => contact.displayContact());
-  }
-
-  countContacts() {
-    const totalContacts = this.contacts.reduce((count) => count + 1, 0);
-    console.log(`📊 Total Contacts: ${totalContacts}`);
-    return totalContacts;
-  }
-
-  viewPersonsByCity(city) {
-    const personsInCity = this.contacts
-      .filter((contact) => contact.city.toLowerCase() === city.toLowerCase())
-      .map((contact) => `${contact.firstName} ${contact.lastName}`);
-
-    if (personsInCity.length === 0) {
-      console.log(`❌ No persons found in city: ${city}`);
-    } else {
-      console.log(`📍 Persons in ${city}: ${personsInCity.join(", ")}`);
-    }
-  }
-
-  viewPersonsByState(state) {
-    const personsInState = this.contacts
-      .filter((contact) => contact.state.toLowerCase() === state.toLowerCase())
-      .map((contact) => `${contact.firstName} ${contact.lastName}`);
-
-    if (personsInState.length === 0) {
-      console.log(`❌ No persons found in state: ${state}`);
-    } else {
-      console.log(`🌎 Persons in ${state}: ${personsInState.join(", ")}`);
-    }
   }
 }
 
