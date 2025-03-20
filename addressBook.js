@@ -1,5 +1,3 @@
-const Contact = require("./contact");
-
 class AddressBook {
   constructor() {
     this.contacts = [];
@@ -34,89 +32,19 @@ class AddressBook {
     this.contacts.forEach((contact) => contact.displayContact());
   }
 
-  findContact(firstName, lastName) {
-    return this.contacts.find(
-      (contact) =>
-        contact.firstName.toLowerCase() === firstName.toLowerCase() &&
-        contact.lastName.toLowerCase() === lastName.toLowerCase()
-    );
-  }
-
-  editContact(firstName, lastName, updatedDetails) {
-    let contact = this.findContact(firstName, lastName);
-    if (!contact) {
-      console.log(`❌ No contact found with name "${firstName} ${lastName}".`);
+  sortByField(field) {
+    const validFields = ["city", "state", "zip"];
+    if (!validFields.includes(field)) {
+      console.log(
+        `❌ Invalid field "${field}". Please use: City, State, or Zip.`
+      );
       return;
     }
-    Object.assign(contact, updatedDetails);
-    console.log(`✅ Contact "${firstName} ${lastName}" updated successfully!`);
-  }
 
-  deleteContact(firstName, lastName) {
-    const initialLength = this.contacts.length;
-    this.contacts = this.contacts.filter(
-      (contact) =>
-        contact.firstName.toLowerCase() !== firstName.toLowerCase() ||
-        contact.lastName.toLowerCase() !== lastName.toLowerCase()
-    );
+    this.contacts.sort((a, b) => a[field].localeCompare(b[field]));
 
-    if (this.contacts.length === initialLength) {
-      console.log(`❌ Contact "${firstName} ${lastName}" not found.`);
-    } else {
-      console.log(
-        `✅ Contact "${firstName} ${lastName}" deleted successfully!`
-      );
-    }
-  }
-
-  getTotalContacts() {
-    const count = this.contacts.reduce((acc) => acc + 1, 0);
-    console.log(`📊 Total Contacts: ${count}`);
-    return count;
-  }
-
-  findByCityOrState(location) {
-    const filteredContacts = this.contacts.filter(
-      (contact) =>
-        contact.city.toLowerCase() === location.toLowerCase() ||
-        contact.state.toLowerCase() === location.toLowerCase()
-    );
-
-    console.log(`\n🔎 Contacts in "${location}":`);
-    if (filteredContacts.length === 0) {
-      console.log("📭 No contacts found.");
-    } else {
-      filteredContacts.forEach((contact) => contact.displayContact());
-    }
-  }
-
-  countByCityOrState() {
-    const cityCount = this.contacts.reduce((acc, contact) => {
-      acc[contact.city] = (acc[contact.city] || 0) + 1;
-      return acc;
-    }, {});
-
-    const stateCount = this.contacts.reduce((acc, contact) => {
-      acc[contact.state] = (acc[contact.state] || 0) + 1;
-      return acc;
-    }, {});
-
-    console.log("\n📊 Contact Count by City:");
-    console.table(cityCount);
-
-    console.log("\n📊 Contact Count by State:");
-    console.table(stateCount);
-  }
-
-  sortContactsByName() {
-    this.contacts.sort((a, b) =>
-      (a.firstName + " " + a.lastName).localeCompare(
-        b.firstName + " " + b.lastName
-      )
-    );
-
-    console.log("\n📖 --- Sorted Address Book ---");
-    this.contacts.forEach((contact) => contact.displayContact());
+    console.log(`\n🔀 Address Book Sorted by ${field.toUpperCase()}:`);
+    this.displayContacts();
   }
 }
 

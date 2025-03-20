@@ -3,6 +3,7 @@ const Contact = require("./contact");
 
 const addressBook = new AddressBook();
 
+// Adding Contacts
 addressBook.addContact(
   new Contact(
     "John",
@@ -45,24 +46,21 @@ addressBook.addContact(
     "Johnson",
     "234 Elm St",
     "New York",
-    "California",
+    "Texas",
     "100002",
     "9876543240",
     "bob.johnson@example.com"
   )
 );
 
-addressBook.displayContacts();
+// Sort by City
+console.log("\n🔀 Sorting Contacts by City:");
+addressBook.sortByField("city");
 
-addressBook.editContact("John", "Doe", { phoneNumber: "1234567890" });
+// Sort by State
+console.log("\n🔀 Sorting Contacts by State:");
+addressBook.sortByField("state");
 
-addressBook.deleteContact("Jane", "Smith");
-
-addressBook.getTotalContacts();
-
-addressBook.findByCityOrState("California");
-
-addressBook.countByCityOrState();
-
-console.log("\n🔀 Sorting Contacts Alphabetically:");
-addressBook.sortContactsByName();
+// Sort by Zip
+console.log("\n🔀 Sorting Contacts by Zip:");
+addressBook.sortByField("zip");
