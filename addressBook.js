@@ -76,38 +76,28 @@ class AddressBook {
     return totalContacts;
   }
 
-  searchByCity(city) {
-    const contactsInCity = this.contacts.filter(
-      (contact) => contact.city.toLowerCase() === city.toLowerCase()
-    );
+  viewPersonsByCity(city) {
+    const personsInCity = this.contacts
+      .filter((contact) => contact.city.toLowerCase() === city.toLowerCase())
+      .map((contact) => `${contact.firstName} ${contact.lastName}`);
 
-    if (contactsInCity.length === 0) {
-      console.log(`❌ No contacts found in city: ${city}`);
-      return;
+    if (personsInCity.length === 0) {
+      console.log(`❌ No persons found in city: ${city}`);
+    } else {
+      console.log(`📍 Persons in ${city}: ${personsInCity.join(", ")}`);
     }
-
-    console.log(`📍 Contacts in ${city}:`);
-    contactsInCity.map((contact) => contact.displayContact());
-
-    const total = contactsInCity.reduce((count) => count + 1, 0);
-    console.log(`📝 Total Contacts in ${city}: ${total}`);
   }
 
-  searchByState(state) {
-    const contactsInState = this.contacts.filter(
-      (contact) => contact.state.toLowerCase() === state.toLowerCase()
-    );
+  viewPersonsByState(state) {
+    const personsInState = this.contacts
+      .filter((contact) => contact.state.toLowerCase() === state.toLowerCase())
+      .map((contact) => `${contact.firstName} ${contact.lastName}`);
 
-    if (contactsInState.length === 0) {
-      console.log(`❌ No contacts found in state: ${state}`);
-      return;
+    if (personsInState.length === 0) {
+      console.log(`❌ No persons found in state: ${state}`);
+    } else {
+      console.log(`🌎 Persons in ${state}: ${personsInState.join(", ")}`);
     }
-
-    console.log(`🌎 Contacts in ${state}:`);
-    contactsInState.map((contact) => contact.displayContact());
-
-    const total = contactsInState.reduce((count) => count + 1, 0);
-    console.log(`📝 Total Contacts in ${state}: ${total}`);
   }
 }
 

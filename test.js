@@ -1,4 +1,5 @@
 const AddressBook = require("./addressBook");
+const Contact = require("./contact");
 
 const addressBook = new AddressBook();
 
@@ -43,8 +44,13 @@ try {
   console.error(error.message);
 }
 
-console.log("\n🔍 Searching Contacts by City:");
-addressBook.searchByCity("Los Angeles");
+addressBook.displayContacts();
 
-console.log("\n🔍 Searching Contacts by State:");
-addressBook.searchByState("California");
+console.log("\n🔍 Viewing Persons by City:");
+addressBook.viewPersonsByCity("Los Angeles");
+
+console.log("\n🔍 Viewing Persons by State:");
+addressBook.viewPersonsByState("California");
+
+console.log("\n📊 Counting Contacts:");
+addressBook.countContacts();
