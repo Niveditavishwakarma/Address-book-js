@@ -30,6 +30,7 @@ try {
 
   console.log("\nBefore Deletion:");
   addressBook.displayContacts();
+  addressBook.getContactCount();
 
   // Deleting Contact
   console.log("\nDeleting Jane Smith:");
@@ -37,6 +38,7 @@ try {
 
   console.log("\nAfter Deletion:");
   addressBook.displayContacts();
+  addressBook.getContactCount();
 } catch (error) {
   console.error(error.message);
 }

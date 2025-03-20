@@ -39,10 +39,8 @@ class AddressBook {
     }
 
     let updatedFields = [];
-
     Object.keys(updatedDetails).forEach((key) => {
-      if (!updatedDetails[key]) return; // Skip empty values
-
+      if (!updatedDetails[key]) return;
       contact[key] = updatedDetails[key];
       updatedFields.push(key);
     });
@@ -53,7 +51,7 @@ class AddressBook {
       );
       contact.displayContact();
     } else {
-      console.log("⚠️ No valid updates were provided.");
+      console.log("No valid updates were provided.");
     }
   }
 
@@ -71,6 +69,13 @@ class AddressBook {
 
     this.contacts.splice(index, 1);
     console.log(`✅ Contact "${firstName} ${lastName}" deleted successfully!`);
+  }
+
+  // ✅ Get total number of contacts using reduce
+  getContactCount() {
+    const count = this.contacts.reduce((total) => total + 1, 0);
+    console.log(` Total Contacts: ${count}`);
+    return count;
   }
 }
 
